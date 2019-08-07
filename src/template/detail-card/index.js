@@ -6,7 +6,7 @@ import {
   DatePicker,
   Select,
   Button,
-  NavMenu,
+  Menu,
   Stepper,
   Timeline,
   Icon,
@@ -172,11 +172,13 @@ export default class Template extends Component {
           </Col>
 
           <Col className='detail-group__card page page--gutter'>
-            <NavMenu
-              data={[{ title: '车辆信息' }, { title: '商品信息' }]}
+            <Menu
+              placement='horizontal'
+              activeId={activeNavMenuIndex}
+              data={[{ id:0, content: '车辆信息' }, { id: 1, content: '商品信息' }]}
               onClick={(_, idx) => {
                 this.setState({
-                  activeNavMenuIndex: idx
+                  activeNavMenuIndex: _
                 })
               }}
             />

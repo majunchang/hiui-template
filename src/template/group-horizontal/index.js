@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { NavMenu, Grid, Table, Icon, Modal, Button, Dropdown, Notification } from '@hi-ui/hiui'
+import { Menu, Grid, Table, Icon, Modal, Button, Dropdown, Notification } from '@hi-ui/hiui'
 import axios from 'axios'
 import './index.scss'
 export default class Template extends Component {
@@ -8,10 +8,10 @@ export default class Template extends Component {
     super(props)
 
     this.menus = [
-      { title: '全部订单' },
-      { title: '已完成' },
-      { title: '待付款' },
-      { title: '已关闭' }
+      { id: 0, content: '全部订单' },
+      { id: 1, content: '已完成' },
+      { id: 2, content: '待付款' },
+      { id: 3, content: '已关闭' }
     ]
 
     this.columnMixins = {
@@ -163,10 +163,11 @@ export default class Template extends Component {
       <div className='page--group-horizontal'>
         <Row>
           <Col span={24}>
-            <NavMenu
-              selectedKey={activeMenu}
+            <Menu
+              placement='horizontal'
+              activeId={activeMenu}
               data={this.menus}
-              onClick={(e, menu) => this.changeStatus(parseInt(menu))}
+              onClick={(id, prevId) => this.changeStatus(parseInt(id))}
             />
           </Col>
         </Row>

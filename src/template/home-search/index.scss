@@ -87,21 +87,8 @@
       }
     }
 
-    .hi-navmenu__list {
+    .hi-menu--horizontal {
       border-bottom: none;
-
-      .hi-navmenu__item {
-        color: $white;
-        opacity: 0.75;
-      }
-
-      li.on {
-        opacity: 1;
-      }
-
-      li.on::after {
-        background: $white;
-      }
     }
 
     .mine-tab {

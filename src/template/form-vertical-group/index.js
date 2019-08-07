@@ -7,7 +7,7 @@ import {
   DatePicker,
   Counter,
   TimePicker,
-  NavMenu,
+  Menu,
   Grid,
   Select,
   Radio,
@@ -23,6 +23,7 @@ export default class Template extends Component {
     this.state = {
       forms: this.initForms(),
       current: 0,
+      activeMenuID: 0,
       rules: {
         text: [
           {
@@ -49,13 +50,16 @@ export default class Template extends Component {
     ]
     this.list = [
       {
-        title: '分类一'
+        id: 0,
+        content: '分类一'
       },
       {
-        title: '分类二'
+        id: 1,
+        content: '分类二'
       },
       {
-        title: '分类三'
+        id: 2,
+        content: '分类三'
       }
     ]
   }
@@ -84,7 +88,7 @@ export default class Template extends Component {
   render () {
     const Row = Grid.Row
     const Col = Grid.Col
-    const { forms } = this.state
+    const { forms, activeMenuID } = this.state
 
     return (
       <div className='page--form-vertical-group'>
@@ -102,7 +106,17 @@ export default class Template extends Component {
           </h2>
           <Row>
             <Col span={24}>
-              <NavMenu onClick={this.handleClick} data={this.list}>
+              <Menu
+                placement='horizontal'
+                activeId={activeMenuID}
+                onClick={(id) => {
+                  this.setState({
+                    activeMenuID: id
+                  })
+                }}
+                data={this.list}
+              />
+              <div className='page--form-vertical-group__menu-container'>
                 <div>
                   <FormItem label='姓名' field='text'>
                     <Input
@@ -178,7 +192,7 @@ export default class Template extends Component {
                 </div>
                 <div>1</div>
                 <div>2</div>
-              </NavMenu>
+              </div>
             </Col>
           </Row>
         </Form>

@@ -1,21 +1,25 @@
 import React, { Component } from 'react'
 import '@hi-ui/hiui/es/table/style/index.css'
-import { Form, Input, Button, NavMenu, Cascader, Select } from '@hi-ui/hiui'
+import { Form, Input, Button, Menu, Cascader, Select } from '@hi-ui/hiui'
 import './index.scss'
 
 const FormItem = Form.Item
 const menuList = [
   {
-    title: '基本资料'
+    id: 0,
+    content: '基本资料'
   },
   {
-    title: '偏好设置'
+    id: 1,
+    content: '偏好设置'
   },
   {
-    title: '账户安全'
+    id: 2,
+    content: '账户安全'
   },
   {
-    title: '账户验证'
+    id: 3,
+    content: '账户验证'
   }
 ]
 const groups = [
@@ -89,7 +93,8 @@ export default class UserCenter extends Component {
       tel: 18321768907,
       country: '',
       province: [],
-      address: ''
+      address: '',
+      activeMenuId: 0
     }
     this.list = [
       {
@@ -142,90 +147,102 @@ export default class UserCenter extends Component {
     return (
       <div className='page--user-center'>
         <Form labelWidth='144'>
-          <NavMenu onClick={this.handleClick} data={menuList}>
-            <div style={{ width: 592, marginTop: 14, marginLeft: 14 }}>
-              <FormItem label='头像'>
-                <img
-                  src={photo}
-                  style={{
-                    width: 80,
-                    height: 80
-                  }}
-                />
-              </FormItem>
-              <FormItem label='用户名'>
-                <Input
-                  value={username}
-                  placeholder={'请输入'}
-                  onChange={e => this.onValueChange('username', e.target.value)}
-                />
-              </FormItem>
-              <FormItem label='昵称'>
-                <Input
-                  value={nickname}
-                  placeholder={'请输入'}
-                  onChange={e => this.onValueChange('nickname', e.target.value)}
-                />
-              </FormItem>
-              <FormItem label='工卡号'>
-                <Input
-                  value={cardNum}
-                  placeholder={'请输入'}
-                  onChange={e => this.onValueChange('cardNum', e.target.value)}
-                />
-              </FormItem>
-              <FormItem label='所在部门'>
-                <Cascader
-                  value={group}
-                  onChange={value => {
-                    this.onValueChange('group', value)
-                  }}
-                  data={groups}
-                />
-              </FormItem>
-              <FormItem label='联系方式'>
-                <Input
-                  value={tel}
-                  placeholder={'请输入'}
-                  onChange={e => this.onValueChange('tel', e.target.value)}
-                />
-              </FormItem>
+          <Menu
+            activeId={this.state.activeMenuId}
+            placement='horizontal'
+            onClick={(id) => {
+              this.setState({
+                activeMenuId: id
+              })
+            }}
+            data={menuList}
+          />
+          <div>
+            {
+              this.state.activeMenuId === 0 && <div style={{ width: 592, marginTop: 14, marginLeft: 14 }}>
+                <FormItem label='头像'>
+                  <img
+                    src={photo}
+                    style={{
+                      width: 80,
+                      height: 80
+                    }}
+                  />
+                </FormItem>
+                <FormItem label='用户名'>
+                  <Input
+                    value={username}
+                    placeholder={'请输入'}
+                    onChange={e => this.onValueChange('username', e.target.value)}
+                  />
+                </FormItem>
+                <FormItem label='昵称'>
+                  <Input
+                    value={nickname}
+                    placeholder={'请输入'}
+                    onChange={e => this.onValueChange('nickname', e.target.value)}
+                  />
+                </FormItem>
+                <FormItem label='工卡号'>
+                  <Input
+                    value={cardNum}
+                    placeholder={'请输入'}
+                    onChange={e => this.onValueChange('cardNum', e.target.value)}
+                  />
+                </FormItem>
+                <FormItem label='所在部门'>
+                  <Cascader
+                    value={group}
+                    onChange={value => {
+                      this.onValueChange('group', value)
+                    }}
+                    data={groups}
+                  />
+                </FormItem>
+                <FormItem label='联系方式'>
+                  <Input
+                    value={tel}
+                    placeholder={'请输入'}
+                    onChange={e => this.onValueChange('tel', e.target.value)}
+                  />
+                </FormItem>
 
-              <FormItem label='国家'>
-                <Select
-                  type='single'
-                  data={countrys}
-                  value={country}
-                  onChange={value => {
-                    this.onValueChange('country', value)
-                  }}
-                />
-              </FormItem>
-              <FormItem label='所在省市'>
-                <Cascader
-                  value={province}
-                  onChange={value => {
-                    this.onValueChange('province', value)
-                  }}
-                  data={provinces}
-                />
-              </FormItem>
-              <FormItem label='详细地址'>
-                <Input
-                  value={address}
-                  placeholder={'请输入'}
-                  onChange={e => this.onValueChange('address', e.target.value)}
-                />
-              </FormItem>
-              <Button
-                type='primary'
-                style={{ marginLeft: '142px', marginTop: '8px' }}
-                onClick={this.submitData}
-              >
-                保存
-              </Button>
-            </div>
-          </NavMenu>
+                <FormItem label='国家'>
+                  <Select
+                    type='single'
+                    data={countrys}
+                    value={country}
+                    onChange={value => {
+                      this.onValueChange('country', value)
+                    }}
+                  />
+                </FormItem>
+                <FormItem label='所在省市'>
+                  <Cascader
+                    value={province}
+                    onChange={value => {
+                      this.onValueChange('province', value)
+                    }}
+                    data={provinces}
+                  />
+                </FormItem>
+                <FormItem label='详细地址'>
+                  <Input
+                    value={address}
+                    placeholder={'请输入'}
+                    onChange={e => this.onValueChange('address', e.target.value)}
+                  />
+                </FormItem>
+                <Button
+                  type='primary'
+                  style={{ marginLeft: '142px', marginTop: '8px' }}
+                  onClick={this.submitData}
+                >
+                  保存
+                </Button>
+              </div>
+            }
+          </div>
         </Form>
       </div>
     )

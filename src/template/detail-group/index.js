@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '@hi-ui/hiui/es/table/style/index.css'
 import { Link } from 'react-router-dom'
-import { Input, DatePicker, Select, Button, NavMenu, Icon, Grid, Loading } from '@hi-ui/hiui'
+import { Input, DatePicker, Select, Button, Menu, Icon, Grid, Loading } from '@hi-ui/hiui'
 import { DataFilter, FieldGroup, Field } from '@hi-ui/component-kit/es/data-filter'
 import './index.scss'
 import axios from 'axios'
@@ -125,11 +125,13 @@ export default class Template extends Component {
             </ul>
           </Col>
           <Col className='detail-group__card page page--gutter detail-group__table'>
-            <NavMenu
-              data={[{ title: '车辆信息' }, { title: '商品信息' }]}
-              onClick={(_, idx) => {
+            <Menu
+              data={[{ id: 0, content: '车辆信息' }, { id: 1, content: '商品信息' }]}
+              placement='horizontal'
+              activeId={activeNavMenuIndex}
+              onClick={(id, prevId) => {
                 this.setState({
-                  activeNavMenuIndex: idx
+                  activeNavMenuIndex: id
                 })
               }}
             />

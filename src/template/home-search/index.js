@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Grid, Input, Button, Icon, NavMenu, Card } from '@hi-ui/hiui'
+import { Grid, Input, Button, Icon, Menu, Card } from '@hi-ui/hiui'
 import './index.scss'
 
 const { Row, Col } = Grid
@@ -8,7 +8,7 @@ const { Row, Col } = Grid
 class HomeSearch extends Component {
   constructor (props) {
     super(props)
-    this.data1 = [{ title: '常用' }, { title: '我的' }]
+    this.data1 = [{ id: 0, content: '常用' }, { id: 1, content: '我的' }]
     this.state = {
       background: '',
       currentTab: 0
@@ -163,12 +163,13 @@ class HomeSearch extends Component {
           </Row>
         </div>
         <div className='tab-box'>
-          <NavMenu
-            selectedKey={this.state.currentTab}
+          <Menu
+            placement='horizontal'
+            activeId={this.state.currentTab}
             data={this.data1}
             onClick={(_, idx) => {
               this.setState({
-                currentTab: parseInt(idx)
+                currentTab: parseInt(_)
               })
             }}
           />

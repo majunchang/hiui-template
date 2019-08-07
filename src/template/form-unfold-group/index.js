@@ -9,7 +9,7 @@ import {
   TimePicker,
   Select,
   Radio,
-  NavMenu,
+  Menu,
   Grid
 } from '@hi-ui/hiui'
 import './index.scss'
@@ -20,7 +20,8 @@ export default class Template extends Component {
     super(props)
     this.state = {
       forms: this.initForms(),
-      current: 0
+      current: 0,
+      activeMenuID: 0
     }
     this.singleList = [
       { title: '较长的一段描述文本', id: '2' },
@@ -31,13 +32,16 @@ export default class Template extends Component {
     ]
     this.list = [
       {
-        title: '分类一'
+        id: 0,
+        content: '分类一'
       },
       {
-        title: '分类二'
+        id: 1,
+        content: '分类二'
       },
       {
-        title: '分类三'
+        id: 2,
+        content: '分类三'
       }
     ]
   }
@@ -66,8 +70,8 @@ export default class Template extends Component {
   render () {
     const Row = Grid.Row
     const Col = Grid.Col
-    const { forms } = this.state
-
+    const { forms, activeMenuID } = this.state
+    console.log(activeMenuID)
     return (
       <div className='page--form-unfold-group'>
         <Form ref={this.form1} model={forms} rules={this.state.rules} labelWidth='90'>
@@ -85,82 +89,94 @@ export default class Template extends Component {
 
           <Row>
             <Col span={24}>
-              <NavMenu onClick={this.handleClick} data={this.list}>
-                <div>
-                  <fieldset>
-                    <legend>基础信息</legend>
+              <Menu
+                placement='horizontal'
+                activeId={activeMenuID}
+                onClick={(id, prevId) => {
+                  this.setState({
+                    activeMenuID: id
+                  })
+                }}
+                data={this.list}
+              />
+              <div className='page--form-unfold-group__menu-container'>
+                {
+                  activeMenuID === 0 && <div>
+                    <fieldset>
+                      <legend>基础信息</legend>
 
-                    <FormItem label='名字' field='text'>
-                      <Input
-                        value={forms.text}
-                        placeholder={'name'}
-                        onChange={this.handleChange.bind(this, 'column1')}
-                        style={{ width: '250px' }}
-                      />
-                    </FormItem>
-                    <FormItem label='日期' field='Date'>
-                      <DatePicker
-                        type='daterange'
-                        value={forms.Date}
-                        onChange={d => {
-                          console.log(d)
-                        }}
-                      />
-                    </FormItem>
-                    <FormItem label='数量' field='num'>
-                      <Counter
-                        defaultValue={forms.num}
-                        step={1}
-                        min={0}
-                        max={8}
-                        onChange={(e, val) => console.log('变化后的值：', val)}
-                      />
-                    </FormItem>
-                    <FormItem label='时间' field='time'>
-                      <TimePicker
-                        value={forms.time}
-                        onChange={d => {
-                          console.log(d)
-                        }}
-                      />
-                    </FormItem>
-                  </fieldset>
+                      <FormItem label='名字' field='text'>
+                        <Input
+                          value={forms.text}
+                          placeholder={'name'}
+                          onChange={this.handleChange.bind(this, 'column1')}
+                          style={{ width: '250px' }}
+                        />
+                      </FormItem>
+                      <FormItem label='日期' field='Date'>
+                        <DatePicker
+                          type='daterange'
+                          value={forms.Date}
+                          onChange={d => {
+                            console.log(d)
+                          }}
+                        />
+                      </FormItem>
+                      <FormItem label='数量' field='num'>
+                        <Counter
+                          defaultValue={forms.num}
+                          step={1}
+                          min={0}
+                          max={8}
+                          onChange={(e, val) => console.log('变化后的值：', val)}
+                        />
+                      </FormItem>
+                      <FormItem label='时间' field='time'>
+                        <TimePicker
+                          value={forms.time}
+                          onChange={d => {
+                            console.log(d)
+                          }}
+                        />
+                      </FormItem>
+                    </fieldset>
 
-                  <fieldset>
-                    <legend>基础信息</legend>
+                    <fieldset>
+                      <legend>基础信息</legend>
 
-                    <FormItem label='类别' field='select'>
-                      <Select
-                        data={this.singleList}
-                        placeholder='请选择种类'
-                        style={{ width: '200px' }}
-                        value={forms.select}
-                        onChange={item => {
-                          console.log('单选结果', item)
-                        }}
-                      />
-                    </FormItem>
-                    <FormItem label='单选' field='radio'>
-                      <Radio.Group
-                        data={['北京', '上海', '重庆']}
-                        value={forms.radio}
-                        onChange={this.handleChange.bind(this, 'region', '')}
-                      />
-                    </FormItem>
-                    <FormItem label='备注' field='longText'>
-                      <Input
-                        value={forms.longText}
-                        placeholder={'多行文本'}
-                        onChange={this.handleChange.bind(this, 'column1')}
-                        style={{ width: '320px', height: '160px', resize: 'none' }}
-                        type='textarea'
-                      />
-                    </FormItem>
-                  </fieldset>
-                </div>
-                <div>1</div>
-                <div>2</div>
-              </NavMenu>
+                      <FormItem label='类别' field='select'>
+                        <Select
+                          data={this.singleList}
+                          placeholder='请选择种类'
+                          style={{ width: '200px' }}
+                          value={forms.select}
+                          onChange={item => {
+                            console.log('单选结果', item)
+                          }}
+                        />
+                      </FormItem>
+                      <FormItem label='单选' field='radio'>
+                        <Radio.Group
+                          data={['北京', '上海', '重庆']}
+                          value={forms.radio}
+                          onChange={this.handleChange.bind(this, 'region', '')}
+                        />
+                      </FormItem>
+                      <FormItem label='备注' field='longText'>
+                        <Input
+                          value={forms.longText}
+                          placeholder={'多行文本'}
+                          onChange={this.handleChange.bind(this, 'column1')}
+                          style={{ width: '320px', height: '160px', resize: 'none' }}
+                          type='textarea'
+                        />
+                      </FormItem>
+                    </fieldset>
+                  </div>
+                }
+                {activeMenuID === 1 && <div>1</div>}
+                {activeMenuID === 2 && <div>2</div>}
+              </div>
             </Col>
           </Row>
         </Form>
